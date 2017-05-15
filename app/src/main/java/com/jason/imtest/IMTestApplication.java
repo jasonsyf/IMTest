@@ -22,7 +22,12 @@ import static com.hyphenate.util.EasyUtils.TAG;
  */
 
 public class IMTestApplication extends Application {
+
+
     public static Context context;
+    public static Context getInstance() {
+        return context;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
@@ -68,5 +73,9 @@ public class IMTestApplication extends Application {
             }
         }
         return processName;
+    }
+
+    public static Context context() {
+        return context;
     }
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
+import com.jason.imtest.IMTestApplication;
 import com.jason.imtest.MvpContract.RegisterLoginIMContract;
 import com.jason.imtest.MvpPresenter.RegisterIMPresenter;
 import com.jason.imtest.R;
@@ -41,6 +42,7 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     @BindView(R.id.im_register_btn)
     Button mImRegisterBtn;
     private RegisterLoginIMContract.Presenter mPresenter;
+    private String pwd, pwd2;
     public IMRegisterFragment() {
 
     }
@@ -61,6 +63,8 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         new RegisterIMPresenter(this);
+        pwd = mImRegisterPwd.getText().toString();
+        pwd2 = mImRegisterPwd2.getText().toString();
     }
 
     @Override
@@ -73,8 +77,13 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
 
     @OnClick(R.id.im_register_btn)
     public void onClick() {
-        mPresenter.onSuccess();
-
+        if (mImRegisterUsername.getText().toString().isEmpty()) {
+            Toast.makeText(IMTestApplication.context, "帐号不能为空", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(IMTestApplication.context, "开始注册", Toast.LENGTH_SHORT).show();
+            success();
+            Toast.makeText(IMTestApplication.context, "注册成功", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -84,12 +93,12 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
 
     @Override
     public void progress() {
-
+         mPresenter.onProgress();
     }
 
     @Override
     public void success() {
-
+        mPresenter.onSuccess();
     }
 
     @Override
@@ -106,9 +115,7 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
 
     @Override
     public String pwd() {
-        String pwd = mImRegisterPwd.getText().toString();
-        String pwd2 = mImRegisterPwd2.getText().toString();
-        if (pwd.equals(pwd2)) {
+        if (pwd.isEmpty()&pwd2.isEmpty()&pwd.equals(pwd2)) {
             return pwd2;
         } else {
             Toast.makeText(getContext(), "两次密码不一致！", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.jason.imtest.MvpPresenter;
 
+import android.app.ProgressDialog;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 
 public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @NonNull
     private final RegisterLoginIMContract.View mView;
@@ -58,20 +60,18 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
 
     @Override
     public void onProgress() {
+
     }
 
     @Override
     public void onSuccess() {
         final String username = mView.username();
         final String pwd = mView.pwd();
-        Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> e) throws Exception {
-                try {
-                    EMClient.getInstance().createAccount(username, pwd);//同步方法
-                } catch (HyphenateException e1) {
-                    e1.printStackTrace();
-                }
+        Observable<String> observable = Observable.create(e -> {
+            try {
+                EMClient.getInstance().createAccount(username, pwd);//同步方法
+            } catch (HyphenateException e1) {
+                e1.printStackTrace();
             }
         });
         mDisposable.add(observable.subscribeOn(Schedulers.io())
