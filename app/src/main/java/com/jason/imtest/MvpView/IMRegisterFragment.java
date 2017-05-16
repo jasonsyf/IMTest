@@ -4,6 +4,7 @@ package com.jason.imtest.MvpView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -30,7 +31,7 @@ import static io.reactivex.plugins.RxJavaPlugins.onError;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IMRegisterFragment extends Fragment implements RegisterLoginIMContract.View{
+public class IMRegisterFragment extends Fragment implements RegisterLoginIMContract.View {
 
 
     @BindView(R.id.im_register_username)
@@ -42,7 +43,10 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     @BindView(R.id.im_register_btn)
     Button mImRegisterBtn;
     private RegisterLoginIMContract.Presenter mPresenter;
-    private String pwd, pwd2;
+    @NonNull
+    String pwd,pwd2;
+
+
     public IMRegisterFragment() {
 
     }
@@ -63,8 +67,7 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         new RegisterIMPresenter(this);
-        pwd = mImRegisterPwd.getText().toString();
-        pwd2 = mImRegisterPwd2.getText().toString();
+
     }
 
     @Override
@@ -80,13 +83,15 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
         if (mImRegisterUsername.getText().toString().isEmpty()) {
             Toast.makeText(IMTestApplication.context, "帐号不能为空", Toast.LENGTH_SHORT).show();
         } else {
-            success();
+            progress();
+            mPresenter.onSuccess();
+            Toast.makeText(IMTestApplication.context, "注册成功", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void setPresenter(RegisterLoginIMContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     @Override
@@ -96,9 +101,7 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
 
     @Override
     public void success() {
-        progress();
-        mPresenter.onSuccess();
-        Toast.makeText(IMTestApplication.context, "注册成功", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -115,7 +118,9 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
 
     @Override
     public String pwd() {
-        if (pwd.isEmpty()&pwd2.isEmpty()&pwd.equals(pwd2)) {
+        pwd = mImRegisterPwd.getText().toString();
+         pwd2 = mImRegisterPwd2.getText().toString();
+        if (pwd.equals(pwd2)) {
             return pwd2;
         } else {
             Toast.makeText(getContext(), "两次密码不一致！", Toast.LENGTH_SHORT).show();

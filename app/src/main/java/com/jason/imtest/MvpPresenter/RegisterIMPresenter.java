@@ -68,7 +68,9 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
             try {
                 EMClient.getInstance().createAccount(username, pwd);//同步方法
             } catch (HyphenateException e1) {
-                e1.printStackTrace();
+                int errorCode = e1.getErrorCode();
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(
+                        IMTestApplication.context, errorCode+"", Toast.LENGTH_SHORT).show());
             }
         });
         mDisposable.add(observable.subscribeOn(Schedulers.io())
