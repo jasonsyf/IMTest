@@ -26,7 +26,6 @@ public interface RegisterLoginIMContract {
     }
 
     interface Presenter extends BasePresenter {
-        void onProgress();
 
         void onSuccess();
 

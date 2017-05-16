@@ -58,15 +58,12 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
         mDisposable.clear();
     }
 
-    @Override
-    public void onProgress() {
-
-    }
 
     @Override
     public void onSuccess() {
         final String username = mView.username();
         final String pwd = mView.pwd();
+//        mView.progress();
         Observable<String> observable = Observable.create(e -> {
             try {
                 EMClient.getInstance().createAccount(username, pwd);//同步方法
