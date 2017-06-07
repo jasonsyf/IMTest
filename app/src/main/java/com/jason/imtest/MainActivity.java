@@ -13,11 +13,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        IMRegisterFragment imRegisterFragment=new IMRegisterFragment();
-        transaction.add(android.R.id.content, imRegisterFragment, "IM_REGISTER");
-        transaction.show(imRegisterFragment);
-        transaction.commit();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        IMRegisterFragment imRegisterFragment=new IMRegisterFragment();
+//        transaction.add(android.R.id.content, imRegisterFragment, "IM_REGISTER");
+//        transaction.show(imRegisterFragment);
+//        transaction.commit();
     }
 }

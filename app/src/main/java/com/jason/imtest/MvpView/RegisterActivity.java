@@ -1,22 +1,13 @@
 package com.jason.imtest.MvpView;
 
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.jason.imtest.IMTestApplication;
 import com.jason.imtest.MvpContract.RegisterLoginIMContract;
 import com.jason.imtest.MvpPresenter.RegisterIMPresenter;
@@ -26,13 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static io.reactivex.plugins.RxJavaPlugins.onError;
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class IMRegisterFragment extends Fragment implements RegisterLoginIMContract.View {
-
+public class RegisterActivity extends AppCompatActivity implements RegisterLoginIMContract.View {
 
     @BindView(R.id.im_register_username)
     EditText mImRegisterUsername;
@@ -44,12 +29,8 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     Button mImRegisterBtn;
     private RegisterLoginIMContract.Presenter mPresenter;
     @NonNull
-    String pwd,pwd2;
+    String pwd, pwd2;
 
-
-    public IMRegisterFragment() {
-
-    }
 
     @Override
     public void onResume() {
@@ -64,28 +45,23 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
         new RegisterIMPresenter(this);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_imregister, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.im_register_btn)
-    public void onClick() {
+    public void onViewClicked() {
         if (mImRegisterUsername.getText().toString().isEmpty()) {
             Toast.makeText(IMTestApplication.context, "帐号不能为空", Toast.LENGTH_SHORT).show();
         } else {
             progress();
             mPresenter.onSuccess();
             Toast.makeText(IMTestApplication.context, "注册成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -108,12 +84,13 @@ public class IMRegisterFragment extends Fragment implements RegisterLoginIMContr
     @Override
     public String pwd() {
         pwd = mImRegisterPwd.getText().toString();
-         pwd2 = mImRegisterPwd2.getText().toString();
+        pwd2 = mImRegisterPwd2.getText().toString();
         if (pwd.equals(pwd2)) {
             return pwd2;
         } else {
-            Toast.makeText(getContext(), "两次密码不一致！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "两次密码不一致！", Toast.LENGTH_SHORT).show();
         }
         return null;
     }
+
 }

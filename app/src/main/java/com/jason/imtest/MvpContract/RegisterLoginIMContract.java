@@ -16,10 +16,6 @@ public interface RegisterLoginIMContract {
 
         void progress();
 
-        void success();
-
-        void error(HyphenateException e);
-
         String username();
 
         String pwd();
@@ -29,6 +25,5 @@ public interface RegisterLoginIMContract {
 
         void onSuccess();
 
-        void onError(HyphenateException e);
     }
 }

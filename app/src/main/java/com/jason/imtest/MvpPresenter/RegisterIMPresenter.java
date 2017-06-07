@@ -66,11 +66,12 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
 //        mView.progress();
         Observable<String> observable = Observable.create(e -> {
             try {
-                EMClient.getInstance().createAccount(username, pwd);//同步方法
+                EMClient.getInstance().createAccount(username, pwd);
             } catch (HyphenateException e1) {
                 int errorCode = e1.getErrorCode();
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(
-                        IMTestApplication.context, errorCode+"", Toast.LENGTH_SHORT).show());
+                mHandler.post(() -> {
+                    Toast.makeText(IMTestApplication.context(), errorCode + "环信错误码", Toast.LENGTH_SHORT).show();
+                });
             }
         });
         mDisposable.add(observable.subscribeOn(Schedulers.io())
@@ -81,8 +82,4 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
 
 
 
-    @Override
-    public void onError(HyphenateException e) {
-        mView.error(e);
-    }
 }

@@ -32,7 +32,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!-- 设置环信应用的AppKey -->
@@ -62,6 +61,12 @@
         </receiver>
 
         <activity android:name=".MvpView.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+        <activity android:name=".MvpView.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
