@@ -34,8 +34,8 @@ import io.reactivex.subscribers.DisposableSubscriber;
  * Email: jason_sunyf@163.com
  */
 
-public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter {
+
 
     @NonNull
     private final RegisterLoginIMContract.View mView;
@@ -44,7 +44,7 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
 
     public RegisterIMPresenter(@NonNull RegisterLoginIMContract.View view) {
         mView = view;
-        mDisposable=new CompositeDisposable();
+        mDisposable = new CompositeDisposable();
         mView.setPresenter(this);
     }
 
@@ -79,7 +79,5 @@ public class RegisterIMPresenter implements RegisterLoginIMContract.Presenter{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
     }
-
-
 
 }

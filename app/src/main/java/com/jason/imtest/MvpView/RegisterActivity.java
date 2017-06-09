@@ -57,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterLogin
         if (mImRegisterUsername.getText().toString().isEmpty()) {
             Toast.makeText(IMTestApplication.context, "帐号不能为空", Toast.LENGTH_SHORT).show();
         } else {
-            progress();
             mPresenter.onSuccess();
             Toast.makeText(IMTestApplication.context, "注册成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -70,10 +69,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterLogin
         mPresenter = presenter;
     }
 
-    @Override
-    public void progress() {
-        Toast.makeText(IMTestApplication.context, "开始注册", Toast.LENGTH_SHORT).show();
-    }
 
 
     @Override

@@ -1,5 +1,7 @@
 package com.jason.imtest.MvpContract;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.hyphenate.exceptions.HyphenateException;
@@ -14,14 +16,13 @@ import com.jason.imtest.MvpView.BaseView;
 public interface RegisterLoginIMContract {
     interface View extends BaseView<Presenter> {
 
-        void progress();
-
         String username();
 
         String pwd();
     }
 
     interface Presenter extends BasePresenter {
+        Handler mHandler = new Handler(Looper.getMainLooper());
 
         void onSuccess();
 
